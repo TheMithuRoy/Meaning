@@ -31,5 +31,5 @@ class GetMeaningsUseCase @Inject constructor(
         } catch (e: IOException) {
             emit(Resource.Error("Internet is Unavailable"))
         }
-    }.debounce(300)
+    }
 }
