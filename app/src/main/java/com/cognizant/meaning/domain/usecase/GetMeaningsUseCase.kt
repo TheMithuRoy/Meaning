@@ -1,9 +1,13 @@
+@file:OptIn(FlowPreview::class)
+
 package com.cognizant.meaning.domain.usecase
 
 import com.cognizant.common.Resource
 import com.cognizant.meaning.data.remote.dto.toMeaning
 import com.cognizant.meaning.domain.model.Meaning
 import com.cognizant.meaning.domain.repository.MeaningRepository
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
@@ -27,5 +31,5 @@ class GetMeaningsUseCase @Inject constructor(
         } catch (e: IOException) {
             emit(Resource.Error("Internet is Unavailable"))
         }
-    }
+    }.debounce(300)
 }

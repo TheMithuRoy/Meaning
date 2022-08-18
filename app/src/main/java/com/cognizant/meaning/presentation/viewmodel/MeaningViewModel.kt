@@ -8,8 +8,13 @@ import com.cognizant.common.Resource
 import com.cognizant.meaning.domain.usecase.GetMeaningsUseCase
 import com.cognizant.meaning.presentation.MeaningUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.cancellable
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,12 +28,16 @@ class MeaningViewModel @Inject constructor(
     private val _sfQuery = mutableStateOf("")
     val sfQuery: State<String> = _sfQuery
 
+    private var searchMeaningJob: Job? = null
+
     fun onQueryChange(sfQuery: String) {
         _sfQuery.value = sfQuery
-        getMeanings(sfQuery)
+        searchMeaningJob?.cancel()
+        searchMeaningJob = getMeanings(sfQuery)
     }
 
-    private fun getMeanings(sf: String) {
+    private fun getMeanings(sf: String) = viewModelScope.launch {
+        delay(300L)
         getMeaningsUseCase(sf).onEach { resource ->
             when (resource) {
                 is Resource.Loading -> {
@@ -49,6 +58,6 @@ class MeaningViewModel @Inject constructor(
                     )
                 }
             }
-        }.launchIn(viewModelScope)
+        }.launchIn(this)
     }
 }
