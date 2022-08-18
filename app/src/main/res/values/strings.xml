@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Meaning</string>
+    <string name="et_search_hint">Search Meaning</string>
+    <string name="txt_since">Since</string>
 </resources>
