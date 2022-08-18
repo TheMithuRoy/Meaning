@@ -1,4 +1,4 @@
-package com.cognizant.meaning.ui.composable
+package com.cognizant.meaning.presentation.ui.composable
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,19 +14,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.cognizant.meaning.R
 
 @Composable
-fun SearchBar(@StringRes hint: Int = R.string.et_search_hint) {
+fun SearchBar(
+    value: String,
+    @StringRes hint: Int = R.string.et_search_hint,
+    onValueChange: (value: String) -> Unit
+) {
     TextField(
         modifier = Modifier.fillMaxWidth(),
         leadingIcon = {
             Icon(imageVector = Icons.Default.Search, contentDescription = null)
         },
         label = { Text(stringResource(id = hint)) },
-        value = "",
-        onValueChange = {})
+        value = value,
+        onValueChange = onValueChange
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SearchBarPreview() {
-    SearchBar()
+    SearchBar(value = "") {}
 }

@@ -1,4 +1,4 @@
-package com.cognizant.meaning.ui.theme
+package com.cognizant.meaning.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

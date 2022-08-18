@@ -1,4 +1,4 @@
-package com.cognizant.meaning.ui.theme
+package com.cognizant.meaning.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
