@@ -2,5 +2,7 @@
     <string name="app_name">Meaning</string>
     <string name="et_search_hint">Search Meaning</string>
     <string name="txt_since">Since</string>
+    <string name="txt_no_data_initial">Tap the Search for Meaning</string>
     <string name="error_no_data">No Data Found</string>
+    <string name="error_no_internet">Internet is Unavailable</string>
 </resources>

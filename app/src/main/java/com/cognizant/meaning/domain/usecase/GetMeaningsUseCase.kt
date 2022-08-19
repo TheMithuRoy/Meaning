@@ -2,6 +2,7 @@
 
 package com.cognizant.meaning.domain.usecase
 
+import com.cognizant.common.NoInternetException
 import com.cognizant.common.Resource
 import com.cognizant.meaning.data.remote.dto.toMeaning
 import com.cognizant.meaning.domain.model.Meaning
@@ -19,17 +20,20 @@ class GetMeaningsUseCase @Inject constructor(
 
     operator fun invoke(sf: String) = flow<Resource<List<Meaning>>> {
         try {
-            emit(Resource.Loading())
-            val meanings = mutableListOf<Meaning>()
-            repository.getMeanings(sf).forEach {
-                val mn = it.lfs.map { lf -> lf.toMeaning() }
-                meanings.addAll(mn)
+            if (sf.isBlank()) emit(Resource.Success(emptyList()))
+            else {
+                emit(Resource.Loading())
+                val meanings = mutableListOf<Meaning>()
+                repository.getMeanings(sf).forEach {
+                    val mn = it.lfs.map { lf -> lf.toMeaning() }
+                    meanings.addAll(mn)
+                }
+                emit(Resource.Success(meanings))
             }
-            emit(Resource.Success(meanings))
-        } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "Something Went Wrong"))
-        } catch (e: IOException) {
-            emit(Resource.Error("Internet is Unavailable"))
+        } catch (e: NoInternetException) {
+            emit(Resource.Error(e.message ?: "Something went wrong"))
+        } catch (e: Exception) {
+            emit(Resource.Error("Something went wrong"))
         }
     }
 }

@@ -6,5 +6,6 @@ data class MeaningUiState(
     val isLoading: Boolean = false,
     val meanings: List<Meaning> = emptyList(),
     val error: String = "",
-    val noDataAvailable: Boolean = false
+    val noDataAvailable: Boolean = false,
+    val isInitialState: Boolean = false
 )

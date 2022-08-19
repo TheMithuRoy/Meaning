@@ -38,7 +38,12 @@ fun MeaningSearchScreen(
                 value = sfQuery,
                 onValueChange = viewModel::onQueryChange
             )
-            if (uiState.isLoading) {
+            if (uiState.isInitialState) {
+                NoData(
+                    message = stringResource(id = R.string.txt_no_data_initial),
+                    imageId = R.drawable.ic_search
+                )
+            } else if (uiState.isLoading) {
                 CircularProgressIndicator()
             } else if (uiState.noDataAvailable) {
                 NoData(

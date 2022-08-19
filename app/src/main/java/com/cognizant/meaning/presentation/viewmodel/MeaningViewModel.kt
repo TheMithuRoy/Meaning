@@ -20,7 +20,7 @@ class MeaningViewModel @Inject constructor(
     private val getMeaningsUseCase: GetMeaningsUseCase
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(MeaningUiState())
+    private val _state = mutableStateOf(MeaningUiState(isInitialState = true))
     val state: State<MeaningUiState> = _state
 
     private val _sfQuery = mutableStateOf("")
@@ -44,7 +44,9 @@ class MeaningViewModel @Inject constructor(
                 is Resource.Success -> {
                     val meanings = resource.data.orEmpty()
                     _state.value =
-                        if (meanings.isEmpty()) {
+                        if(meanings.isEmpty() && sf.isBlank()) {
+                            MeaningUiState(isInitialState = true)
+                        } else if (meanings.isEmpty()) {
                             MeaningUiState(noDataAvailable = true)
                         } else {
                             MeaningUiState(meanings = meanings)
