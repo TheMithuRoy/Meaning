@@ -13,10 +13,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cognizant.meaning.R
 import com.cognizant.meaning.presentation.viewmodel.MeaningViewModel
@@ -40,14 +41,17 @@ fun MeaningSearchScreen(
             if (uiState.isLoading) {
                 CircularProgressIndicator()
             } else if (uiState.noDataAvailable) {
-                NoData(message = "No Data Found", imageId = R.drawable.ic_no_data)
+                NoData(
+                    message = stringResource(id = R.string.error_no_data),
+                    imageId = R.drawable.ic_no_data
+                )
             } else if (uiState.error.isNotBlank()) {
                 NoData(message = uiState.error, imageId = R.drawable.ic_error)
             } else {
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    contentPadding = PaddingValues(dimensionResource(id = R.dimen.padding_default)),
+                    verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.space_default))
                 ) {
                     items(uiState.meanings) { meaning ->
                         MeaningItem(meaning = meaning)
@@ -64,7 +68,7 @@ private fun NoData(
     @DrawableRes imageId: Int,
     modifier: Modifier = Modifier
 ) {
-    Spacer(modifier = Modifier.size(8.dp))
+    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_default)))
     Image(
         painter = painterResource(id = imageId),
         contentDescription = null,
@@ -72,7 +76,7 @@ private fun NoData(
             .scale(0.5f)
             .wrapContentSize()
     )
-    Spacer(modifier = Modifier.size(8.dp))
+    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.space_default)))
     Text(text = message, fontWeight = FontWeight.SemiBold)
 }
 
