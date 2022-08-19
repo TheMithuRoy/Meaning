@@ -2,7 +2,6 @@
 
 package com.cognizant.meaning.domain.usecase
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
 import app.cash.turbine.test
 import com.cognizant.common.Resource
 import com.cognizant.meaning.data.remote.dto.LongFormDto
@@ -12,16 +11,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runTest
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 
 class GetMeaningsUseCaseTest {
-
-    @Rule
-    @JvmField
-    val rule = InstantTaskExecutorRule()
 
     private val repo: MeaningRepository = Mockito.mock(MeaningRepository::class.java)
 
